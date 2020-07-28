@@ -25,4 +25,14 @@ public class CalculatorTest {
 
         assertEquals(expectedResult, actualResult);
     }
+
+    @Test
+    public void shouldReturnSumOfNumbersWithNewLinesAndCommas() {
+        int expectedResult = 6;
+        String numbers = "1\n2,3";
+
+        int actualResult = calculator.Add(numbers);
+
+        assertEquals(expectedResult, actualResult);
+    }
 }

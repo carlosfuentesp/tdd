@@ -1,11 +1,15 @@
 public class Calculator {
     public int Add(String numbers) {
-        if (numbers.isEmpty()) return 0;
-        String[] splitNumbers = numbers.split(",");
         int sum = 0;
-        for (String splitNumber : splitNumbers) {
-            sum = sum + Integer.parseInt(splitNumber);
+        if( !numbers.isEmpty() ) {
+            // String [] numbersSplit = numbers.split("//(.*?)\n");
+            // TODO: make this work
+            for (String splitNumber : numbers.split("[\\n,]+"))
+                sum = sum + Integer.parseInt(splitNumber);
+            return sum;
         }
-        return sum;
+
+        return 0;
+
     }
 }
