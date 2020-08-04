@@ -3,7 +3,7 @@ import java.util.regex.Pattern;
 
 public class Calculator {
 
-    private String findDelimiterByRegex(String numbers) {
+    public String findDelimiterByRegex(String numbers) {
         Pattern pattern = Pattern.compile("(?<=//).*?(?=\n)");
         Matcher matcher = pattern.matcher(numbers);
         String delimiter = "[\\n,]+";
