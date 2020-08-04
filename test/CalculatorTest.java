@@ -35,4 +35,19 @@ public class CalculatorTest {
 
         assertEquals(expectedResult, actualResult);
     }
+
+    @Test
+    public void shouldReturnSumOfNumbersWithDelimiterAndSemicolon() {
+        int expectedResult = 3;
+        String numbers = "//;\n1;2";
+
+        int actualResult = calculator.Add(numbers);
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    public void shouldReturnDelimiterFrom () {
+
+    }
 }

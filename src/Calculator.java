@@ -1,11 +1,27 @@
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Calculator {
+
+    private String findDelimiterByRegex(String numbers) {
+        Pattern pattern = Pattern.compile("(?<=//).*?(?=\n)");
+        Matcher matcher = pattern.matcher(numbers);
+        String delimiter = "[\\n,]+";
+
+        if (matcher.find()) delimiter = matcher.group(0);
+
+        return delimiter;
+    }
+
+    private int transformNumberForSum(String number) {
+        return Integer.parseInt(number.replace("\n", ""));
+    }
+
     public int Add(String numbers) {
         int sum = 0;
         if( !numbers.isEmpty() ) {
-            // String [] numbersSplit = numbers.split("//(.*?)\n");
-            // TODO: make this work
-            for (String splitNumber : numbers.split("[\\n,]+"))
-                sum = sum + Integer.parseInt(splitNumber);
+            for (String splitNumber : numbers.split(findDelimiterByRegex(numbers)))
+                if (!splitNumber.equals("//")) sum = sum + transformNumberForSum(splitNumber);
             return sum;
         }
 
