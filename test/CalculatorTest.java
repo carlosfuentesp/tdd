@@ -7,16 +7,15 @@ public class CalculatorTest {
     private final Calculator calculator = new Calculator();
 
     @Test
-    public void whenExceptionThrown_thenAssertionSucceeds() {
+    public void shouldReturnRegexWithAPatternIsFound() {
+        String pattern = "//%s\n";
+        String values = "1%s2";
+        String numbers = pattern + values;
 
-        String numbers = "1,2,-3";
+        String expectedResult = ";";
+        String actualResult = calculator.findDelimiterByRegex(String.format(numbers, expectedResult, expectedResult));
 
-        Exception exception = assertThrows(NumberFormatException.class, () -> calculator.Add(numbers));
-
-        String expectedMessage = "negatives not allowed";
-        String actualMessage = exception.getMessage();
-
-        assertTrue(actualMessage.contains(expectedMessage));
+        assertEquals(expectedResult, actualResult);
     }
 
     @Test
@@ -34,7 +33,7 @@ public class CalculatorTest {
         int expectedResult = 0;
         String numbers = "";
 
-        int actualResult = calculator.Add(numbers);
+        int actualResult = calculator.add(numbers);
 
         assertEquals(expectedResult, actualResult);
     }
@@ -44,7 +43,7 @@ public class CalculatorTest {
         int expectedResult = 6;
         String numbers = "1,2,3";
 
-        int actualResult = calculator.Add(numbers);
+        int actualResult = calculator.add(numbers);
 
         assertEquals(expectedResult, actualResult);
     }
@@ -54,7 +53,7 @@ public class CalculatorTest {
         int expectedResult = 6;
         String numbers = "1\n2,3";
 
-        int actualResult = calculator.Add(numbers);
+        int actualResult = calculator.add(numbers);
 
         assertEquals(expectedResult, actualResult);
     }
@@ -64,7 +63,7 @@ public class CalculatorTest {
         int expectedResult = 3;
         String numbers = "//;\n1;2";
 
-        int actualResult = calculator.Add(numbers);
+        int actualResult = calculator.add(numbers);
 
         assertEquals(expectedResult, actualResult);
     }
@@ -74,9 +73,9 @@ public class CalculatorTest {
     public void shouldThrownAnNumberFormatExceptionWhenANegativeNumberIsProvided() {
         String numbers = "//;\n1;-2;-4";
 
-        Exception exception = assertThrows(NumberFormatException.class, () -> calculator.Add(numbers));
+        Exception exception = assertThrows(NumberFormatException.class, () -> calculator.add(numbers));
 
-        String expectedMessage = "negatives not allowed";
+        String expectedMessage = "negatives not allowed: -2-4";
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));
