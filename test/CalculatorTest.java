@@ -1,5 +1,8 @@
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CalculatorTest {
@@ -68,7 +71,6 @@ public class CalculatorTest {
         assertEquals(expectedResult, actualResult);
     }
 
-
     @Test
     public void shouldThrownAnNumberFormatExceptionWhenANegativeNumberIsProvided() {
         String numbers = "//;\n1;-2;-4";
@@ -81,6 +83,22 @@ public class CalculatorTest {
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
+    @Test
+    public void shouldFindTheListOfNumbersForDefinedLimiter() {
+        String expectedResult = "1|3|4|5";
+        String numbers = "//|\n1|3|4|5";
 
+        String actualResult = calculator.findNumbersForDefinedDelimiter(numbers);
 
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    public void shouldSumAllNumbersFromAGivenList() {
+        int expectedResult = 12;
+        List<String> numbers = Arrays.asList("2", "3", "1", "6");
+        int actualResult = calculator.sum(numbers);
+
+        assertEquals(expectedResult, actualResult);
+    }
 }
