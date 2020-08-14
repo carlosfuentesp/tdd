@@ -3,6 +3,32 @@ import java.util.regex.Pattern;
 
 public class Calculator {
 
+    private String errorMessage = "";
+
+    public int Add(String numbers) throws NegativeNumberException {
+        int sum = 0;
+        int transformedNumber = 0;
+        if (!numbers.isEmpty()) {
+            int index = 0;
+            String [] splitArrayOfNumbers = numbers.split(findDelimiterByRegex(numbers));
+            for (String splitNumber : splitArrayOfNumbers)
+                if (!splitNumber.equals("//")) {
+                    transformedNumber = transformNumberForSum(splitNumber);
+                    if ( transformedNumber < 0 ) {
+                        addToErrorMessageForExceptionThrow(splitNumber);
+                    }
+                    if ( index == splitArrayOfNumbers.length - 2 && !errorMessage.equals("") ) {
+                        throw new NegativeNumberException("negatives not allowed - " + errorMessage);
+                    }
+                    sum = sum + transformedNumber;
+                    index++;
+                }
+            return sum;
+        }
+
+        return 0;
+    }
+
     public String findDelimiterByRegex(String numbers) {
         Pattern pattern = Pattern.compile("(?<=//).*?(?=\n)");
         Matcher matcher = pattern.matcher(numbers);
@@ -17,15 +43,14 @@ public class Calculator {
         return Integer.parseInt(number.replace("\n", ""));
     }
 
-    public int Add(String numbers) {
-        int sum = 0;
-        if( !numbers.isEmpty() ) {
-            for (String splitNumber : numbers.split(findDelimiterByRegex(numbers)))
-                if (!splitNumber.equals("//")) sum = sum + transformNumberForSum(splitNumber);
-            return sum;
-        }
-
-        return 0;
-
+    private void addToErrorMessageForExceptionThrow(String number) {
+        errorMessage = errorMessage + number + " ";
     }
+
+    public static class NegativeNumberException extends Exception {
+        public NegativeNumberException(String errorMessage) {
+            super(errorMessage);
+        }
+    }
+
 }
