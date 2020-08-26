@@ -1,35 +1,12 @@
 import org.junit.jupiter.api.Test;
-
 import java.util.Arrays;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CalculatorTest {
 
-    private final Calculator calculator = new Calculator();
-
-    @Test
-    public void shouldReturnRegexWithAPatternIsFound() {
-        String pattern = "//%s\n";
-        String values = "1%s2";
-        String numbers = pattern + values;
-
-        String expectedResult = ";";
-        String actualResult = calculator.findDelimiterByRegex(String.format(numbers, expectedResult, expectedResult));
-
-        assertEquals(expectedResult, actualResult);
-    }
-
-    @Test
-    public void shouldReturnCharRegexWhenThereIsNoPattern() {
-        String numbers = "1/n2,3";
-
-        String expectedResult = "[\\n,]+";
-        String actualResult = calculator.findDelimiterByRegex(numbers);
-
-        assertEquals(expectedResult, actualResult);
-    }
+    private Transformer transformer = new Transformer();
+    private final Calculator calculator = new Calculator(transformer);
 
     @Test
     public void shouldReturnZeroWhenEmptyStringIsProvided() {
@@ -81,16 +58,6 @@ public class CalculatorTest {
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));
-    }
-
-    @Test
-    public void shouldFindTheListOfNumbersForDefinedLimiter() {
-        String expectedResult = "1|3|4|5";
-        String numbers = "//|\n1|3|4|5";
-
-        String actualResult = calculator.findNumbersForDefinedDelimiter(numbers);
-
-        assertEquals(expectedResult, actualResult);
     }
 
     @Test
