@@ -2,6 +2,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,7 +28,13 @@ public class CalculatorTest {
         int expectedResult = 6;
         String numbers = "1,2,3";
 
-        int actualResult = calculator.add(numbers);
+        List<String> myList = Arrays.asList("1", "2", "3");
+        Transformer transformer = mock(Transformer.class);
+        when(transformer.transformStringToList(any())).thenReturn(myList);
+
+        Calculator calc = new Calculator(transformer);
+
+        int actualResult = calc.add(numbers);
 
         assertEquals(expectedResult, actualResult);
     }
